@@ -1,0 +1,58 @@
+<html lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>MGR 1.0</title>
+	<meta name="author" content="Patryk Dudziński">
+	<meta name="description" content="Example description">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="icon" type="image/x-icon" href=""/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/css/foundation.min.css" integrity="sha256-GSio8qamaXapM8Fq9JYdGNTvk/dgs+cMLgPeevOYEx0= sha384-wAweiGTn38CY2DSwAaEffed6iMeflc0FMiuptanbN4J+ib+342gKGpvYRWubPd/+ sha512-QHEb6jOC8SaGTmYmGU19u2FhIfeG+t/hSacIWPpDzOp5yygnthL3JwnilM7LM1dOAbJv62R+/FICfsrKUqv4Gg==" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,700,800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="static/css/app.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+</head>
+
+<body>
+	<header>
+	    <h1>Praca magisterska</h1>
+	    <h3>Patryk Dudziński 2020</h3>
+	    <h6>Wybierz plik z rozszerzeniem .arrf, wgraj go, a następnie wyślij na serwer</h6>
+	</header>
+	<main> 
+        <form id="upload" method="post" action="/" enctype="multipart/form-data">
+            <label for="fileuploader" class="button">Wybierz plik</label>
+            <input id="fileuploader" name="file" type="file"  class="show-for-sr" />
+            <input id="send_file" class="hollow button success" type="submit" value="Wyślij">
+        </form>
+	    <div id="parameters_list" style="display: none;">
+            <br />
+            <h3>Parametry pliku <span id="parameters_filename">{{filename}}</span> </h3>
+            <h6>Wybierz atrybut ze zbioru, który chcesz przekazać do prognozowania:</h6>
+            <ul>
+                {% for param in parameters_list %}
+
+                    <li>{{param}}</li>
+
+                {% endfor %}
+            </ul>	        
+	    </div>
+	    <div id="chart">
+	        
+	    </div>
+	    
+	</main>
+	<footer>
+	    
+	</footer>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript"
+         src="{{ url_for('static', filename='js/main.js') }}"></script>      
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/js/foundation.min.js" integrity="sha256-mRYlCu5EG+ouD07WxLF8v4ZAZYCA6WrmdIXyn1Bv9Vk= sha384-KzKofw4qqetd3kvuQ5AdapWPqV1ZI+CnfyfEwZQgPk8poOLWaabfgJOfmW7uI+AV sha512-0gHfaMkY+Do568TgjJC2iMAV0dQlY4NqbeZ4pr9lVUTXQzKu8qceyd6wg/3Uql9qA2+3X5NHv3IMb05wb387rA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+
+</body>
