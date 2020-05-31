@@ -1,8 +1,34 @@
-<h2>Wybrany plik posiada następujące parametry: </h2>
-<ul>
-    {% for param in parameters_list %}
 
-        <li>{{param}}</li>
-
-    {% endfor %}
-</ul>
+<br />
+<h3>Parametry pliku <span id="parameters_filename">{{filename}}</span> </h3>
+<ul><li></li></ul>
+<select name="form_method" id="form_method">
+    <option value="0">Regresja Logistyczna</option>
+    <option value="1">kNN</option>
+    <option value="2">Naiwny klasyfikator Bayesa</option>
+    <option value="3">SVC</option>
+    <option value="4">Drzewo decyzyjne</option>
+    <option value="5">Sieć RBF</option>    
+    <option style="display: none" default selected value="">Wybierz metodę uczenia</option>    
+</select>
+<select name="form_optimize_method" id="form_optimize_method">
+    <option value="grid">Grid</option>
+    <option value="grid">Losowo</option>
+    <option value="grid">Funkcja Bayesowska</option>
+    <option style="display: none" default selected value="">Optymalizacja parametrów</option>    
+</select>
+<input type="number" id="form_iterations" placeholder="Liczba iteracji">
+<input type="number" min=0 max=1 step=0.1 id="form_score" placeholder="Minimalna dokładność">
+<p>Wielkość zbioru uczącego względem całego zbioru:</p>
+<div class="grid-x grid-margin-x">
+  <div class="cell small-10">
+    <div class="slider" data-slider data-initial-start="10" data-end="90">
+      <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="form_proportion"></span>
+      <span class="slider-fill" data-slider-fill></span>
+    </div>
+  </div>
+  <div class="cell small-2">
+    <input type="number" id="form_proportion">
+  </div>
+</div>
+<input id="forecast_data_save" class="hollow button success" type="submit" value="Zapisz parametry">

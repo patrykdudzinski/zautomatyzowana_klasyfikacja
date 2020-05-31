@@ -1,43 +1,105 @@
 <h3> Dokładność uczenia {{score_result}} </h3>
 <input id="parameters" type="hidden" value="{{class_names}}">
-<canvas id="myChart" width="400" height="400"></canvas>
+<input id="values" type="hidden" value="{{probes}}">
+<input type="hidden" id = "forecast_code" value = {{code}}>
+
+<div class="myChartDiv">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
 <script>
-    var parameters = $('#parameters').val().split(',')
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: parameters,
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }    
+    if($('#forecast_code').val() === '0'){
+        //Pobierz dane z kontrolera i przygotuj do wyświetlenia na wykresie//
+        var parameters = $('#parameters').val().split(',')
+        var values = $('#values').val().split(',')
+        values = JSON.parse(values);
+        size = values[0].proba.length;
+        var probes = []
+        for(i = 0; i < size; i++){
+            probes[i] = [];
         }
-    });
+        values.forEach(function(item, key){
+            item.proba.forEach(function(proba_item, proba_key){
+                probes[proba_key].push(proba_item)    
+            })
+        })
+        var objects = [];
+        //Obiekt ze wszystkimi prawdopodobieństwami posortowanymi po klasach - tworzone tutaj będą obiekty wykresu dla kolejnych klas//
+        probes.forEach(function(item, key){
+            var tmp_object = {
+                label: 'Klasa '+key,
+                backgroundColor: getRandomColor(),
+                data: item,
+                borderWidth: 0,
+                yAxisID: "y-axis-density"
+            }
+            objects.push(tmp_object);
+        })
+
+
+        //====================== WYKRES =============================//
+
+        var labels_array = [];
+        var probes_length = objects[0].data.length;
+        for(i = 0; i < probes_length; i++){
+            labels_array.push('Próbka '+(i+1));
+        }
+        var chart_values = {
+          labels: labels_array,
+          datasets: objects
+        };    
+
+        var chart_options = {
+          scales: {
+            xAxes: [{
+              barPercentage: 1,
+              categoryPercentage: 0.6
+            }],
+            yAxes: [{
+              id: "y-axis-density"
+            }, {
+              id: "y-axis-gravity"
+            }]
+          },
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'xy'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'xy',
+                    }
+                }
+            }        
+        };
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+          type: 'bar',
+          data: chart_values,
+          options: chart_options
+        });
+
+    }
 </script>

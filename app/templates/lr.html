@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+
+{% block lr_wrapper %}
+           !--            Wrapper dla regresji logistycznej-->
+            <div id="lr_wrapper" class="additional_parameters">
+                <select name="form_lr_algortithm" class="form_option" id="form_lr_algortithm">
+                    <option value="newton-cg">Newton-cg</option>
+                    <option value="lbfgs">Lbfgs</option>
+                    <option value="liblinear">Liblinear</option>
+                    <option value="sag">Sag</option> 
+                    <option value="saga">Saga</option>
+                    <option style="display: none" default selected value="lbfgs">Algorytm regresji</option>    
+                </select>                 
+               <select name="form_lr_penalty" class="form_option" id="form_lr_penalty">
+                    <option value="l1">l1</option>
+                    <option value="l2">l2</option>
+                    <option value="elasticnet">Elasticnet</option>
+                    <option value="none">Brak</option> 
+                    <option style="display: none" default selected value="l2">Norma regresji</option>    
+                </select>                 
+                <select name="form_lr_multi_class" class="form_option" id="form_lr_multi_class">
+                    <option value="auto">Auto</option>
+                    <option value="ovr">Ovr</option>
+                    <option value="multinomial">Multinomial</option>
+                    <option style="display: none" default selected value="auto">Multi-klasowość</option>     
+                </select> 
+                <select name="form_lr_dual" class="form_option" id="form_lr_dual">
+                    <option value="1">Podwójne</option>
+                    <option value="0">Pojedyncze</option>>
+                    <option style="display: none" default selected value="0">Wyrażenie</option>    
+                </select> 
+                <input type="number" id="form_lr_verbose" name="form_lr_verbose" class="form_option hidden" placeholder="Rozwlekłość">
+                <input type="number" min=0  max=1 id="form_lr_l1_ratio" name="form_lr_l1_ratio" class="form_option hidden" placeholder="Ratio (pomiędzy 0 a 1)">
+                <input type="number" min="0" step="0.1" id="form_lr_reg_strength" name="form_lr_reg_strength" class="form_option" placeholder="Moc regularyzacji (liczba zmiennoprzecinkowa)">                              
+                <input id="form_lr_warm_start" name="form_lr_warm_start" class="form_option" type="checkbox"><label for="form_lr_warm_start">Opcja "warm-start"</label>               
+                <input id="form_lr_fit_intercept" name="form_lr_fit_intercept" class="form_option" type="checkbox"><label for="form_lr_fit_intercept">Czy dodawać stałą do funkcji decyzyjnej?</label>
+                
+            </div> 
+            
+{% endblock %}
+           

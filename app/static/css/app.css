@@ -4,6 +4,17 @@ h1, h2, h3, h6, body{
 
 body{
     padding: 20px;
+    overflow:scroll;
+}
+
+.hidden,
+.additional_parameters,
+#parameters_list{
+    display: none;
+}
+
+.visible{
+    display: block;
 }
 
 .button.hollow.success:hover {
@@ -29,3 +40,14 @@ body{
 #upload{
     margin-top: 25px;   
 }
+
+#error_message{
+    font-weight: bold;
+    color: #cc4b37;
+}
+
+/*
+.myChartDiv {
+  max-width: 900px;
+  max-height: 300px;
+}*/
